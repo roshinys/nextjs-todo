@@ -1,0 +1,12 @@
+.todos {
+  padding: 5px;
+  margin: 10px;
+  margin-top: 25px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), -2px -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.todos > h1 {
+  text-align: center;
+  border-bottom: 1px solid gray;
+}
