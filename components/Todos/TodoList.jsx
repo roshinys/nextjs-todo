@@ -1,22 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import SingleTodo from "./SingleTodo";
 import styles from "./TodoList.module.css";
+import { Droppable } from "react-beautiful-dnd";
 
-function TodoList({ todos, onDelTodo, onEditTodo }) {
+function TodoList({ label, todos }) {
   return (
-    <div className={styles.wrapperTodos}>
-      {todos.map((todo) => {
-        return (
-          <SingleTodo
-            key={todo.id}
-            id={todo.id}
-            task={todo.task}
-            onDelTodo={onDelTodo}
-            onEditTodo={onEditTodo}
-          />
-        );
-      })}
-    </div>
+    <Droppable droppableId={label}>
+      {(provided) => (
+        <div
+          className={styles.wrapperTodos}
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          {todos?.map((todo, index) => {
+            return (
+              <SingleTodo
+                key={todo?.id}
+                id={todo?.id}
+                index={index}
+                task={todo?.taskName}
+                label={label}
+              />
+            );
+          })}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 }
 

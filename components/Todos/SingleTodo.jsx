@@ -1,9 +1,18 @@
 import React from "react";
 import styles from "./SingleTodo.module.css";
+import { Draggable } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
+import { todoActions } from "@/store/todo-slice";
 
-function SingleTodo({ id, task, onDelTodo, onEditTodo }) {
+function SingleTodo({ index, id, task, label }) {
+  const dispatch = useDispatch();
+  const isActiveTodo = label === "Todos" ? true : false;
   const deleteTodoHandler = () => {
-    onDelTodo(id);
+    if (isActiveTodo) {
+      dispatch(todoActions.delActiveTodos({ id }));
+    } else {
+      dispatch(todoActions.delCompletedTodos({ id }));
+    }
   };
 
   const editTodoHandler = () => {
@@ -11,13 +20,23 @@ function SingleTodo({ id, task, onDelTodo, onEditTodo }) {
   };
 
   return (
-    <div className={styles.singleTodo}>
-      <h1>{task}</h1>
-      <div>
-        <button onClick={editTodoHandler}>Edit</button>
-        <button onClick={deleteTodoHandler}>Delete</button>
-      </div>
-    </div>
+    <Draggable draggableId={id?.toString()} index={index}>
+      {(provided) => (
+        <div
+          className={styles.singleTodo}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <h1>{task}</h1>
+          <div>
+            <button onClick={editTodoHandler}>Edit</button>
+            <button onClick={deleteTodoHandler}>Delete</button>
+          </div>
+          {provided.placeholder}
+        </div>
+      )}
+    </Draggable>
   );
 }
 

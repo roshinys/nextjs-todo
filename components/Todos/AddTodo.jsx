@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import styles from "./AddTodo.module.css";
+import { useDispatch } from "react-redux";
+import { todoActions } from "@/store/todo-slice";
 
-const AddTodo = ({ onAddTodo }) => {
+const AddTodo = () => {
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [taskName, setTaskName] = useState("");
 
@@ -20,7 +23,7 @@ const AddTodo = ({ onAddTodo }) => {
 
   const handleAddTodo = (event) => {
     event.preventDefault();
-    onAddTodo(taskName);
+    dispatch(todoActions.addTodo({ taskName }));
     handleModalClose();
   };
 
