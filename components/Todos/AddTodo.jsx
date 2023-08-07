@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./AddTodo.module.css";
 
-const AddTodo = () => {
+const AddTodo = ({ onAddTodo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [taskName, setTaskName] = useState("");
 
@@ -20,6 +20,7 @@ const AddTodo = () => {
 
   const handleAddTodo = (event) => {
     event.preventDefault();
+    onAddTodo(taskName);
     handleModalClose();
   };
 

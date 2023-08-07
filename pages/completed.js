@@ -17,9 +17,13 @@ const DUMMY_TODOS = [
     id: 4,
     task: "Drink",
   },
+  {
+    id: 5,
+    task: "completed",
+  },
 ];
 
-export default function Home(props) {
+export default function CompletedTodos(props) {
   return (
     <>
       <Todos todos={props.todos} />
