@@ -12,20 +12,15 @@ function TodosState() {
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-    console.log(source, destination);
     if (!destination) {
       return;
     }
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
+    if (destination.droppableId === source.droppableId) {
       return;
     }
     let add,
       active = activeTodos,
       complete = completedTodos;
-    console.log(active, complete);
     if (source.droppableId === "Todos") {
       add = active[source.index];
       dispatch(todoActions.delActiveTodos({ id: add?.id }));
@@ -35,12 +30,7 @@ function TodosState() {
       dispatch(todoActions.delCompletedTodos({ id: add?.id }));
       dispatch(todoActions.addActiveTodo({ todo: add }));
     }
-
-    // if (destination.droppableId === "Todos") {
-    //   // active.splice(destination.index, 0, add);
-    // } else {
-    //   // complete.splice(destination.index, 0, add);
-    // }
+    console.log(source, destination);
   };
 
   return (
