@@ -19,6 +19,12 @@ const todoSlice = createSlice({
         taskName: action.payload.taskName,
       });
     },
+    addActiveTodo: (state, action) => {
+      state.activeTodos.push(action.payload.todo);
+    },
+    addCompletedTodo: (state, action) => {
+      state.completedTodos.push(action.payload.todo);
+    },
     deleteTodo: (state, action) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
@@ -34,7 +40,7 @@ const todoSlice = createSlice({
       });
     },
     delCompletedTodos: (state, action) => {
-      state.activeTodos = state.activeTodos.filter((todos) => {
+      state.completedTodos = state.completedTodos.filter((todos) => {
         return todos.id !== action.payload.id;
       });
     },
