@@ -5,8 +5,6 @@ import { useDispatch } from "react-redux";
 import { delTodo } from "@/store/todo-action";
 
 function SingleTodo({ index, id, task, droppableId }) {
-  console.log("draggableId");
-  console.log(id);
   const dispatch = useDispatch();
   const isActiveTodo = droppableId === "Active" ? true : false;
   const deleteTodoHandler = () => {
@@ -28,9 +26,7 @@ function SingleTodo({ index, id, task, droppableId }) {
           data-rbd-drag-handle-context-id="0"
           className={styles.singleTodo}
         >
-          <div>
-            <h1>{task}</h1>
-          </div>
+          <h1>{task}</h1>
           <div>
             <button onClick={editTodoHandler}>Edit</button>
             <button onClick={deleteTodoHandler}>Delete</button>

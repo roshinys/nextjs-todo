@@ -46,3 +46,33 @@ export const delTodo = (todoId, isActiveTodo) => {
     }
   };
 };
+
+export const changeStatus = (todo) => {
+  return async (dispatch) => {
+    try {
+      const currentStatus = todo.status;
+      // not the best way to do but to make it smoother i adjusted it
+      if (currentStatus === "Active") {
+        dispatch(todoActions.delActiveTodos({ _id: todo._id }));
+        dispatch(todoActions.addCompletedTodo({ todo }));
+      } else {
+        dispatch(todoActions.delCompletedTodos({ _id: todo._id }));
+        dispatch(todoActions.addActiveTodo({ todo }));
+      }
+      const status = todo.status === "Active" ? "Completed" : "Active";
+      const response = await fetch("/api/set-todostate", {
+        method: "PUT",
+        body: JSON.stringify({ todoId: todo._id, status }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        // adjust back the dispatch actions which donot wait
+        throw new Error();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};

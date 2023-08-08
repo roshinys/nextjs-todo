@@ -4,7 +4,6 @@ import { MongoClient } from "mongodb";
 import { useDispatch } from "react-redux";
 
 export default function Home({ activeTodos, completedTodos }) {
-  console.log("bro");
   const dispatch = useDispatch();
   dispatch(todoActions.setTodos({ activeTodos, completedTodos }));
   return <TodosState />;

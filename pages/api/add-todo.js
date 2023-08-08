@@ -14,7 +14,6 @@ async function handler(req, res) {
         .json({ success: true, message: "Todos inserted!", todoItem: result });
     }
   } catch (err) {
-    client.close();
     console.log(err);
     return res
       .status(500)
