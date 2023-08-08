@@ -23,13 +23,11 @@ function TodosState() {
     let add,
       active = activeTodos,
       complete = completedTodos;
-    let status = null;
     if (source.droppableId === "Active") {
       add = active[source.index];
     } else {
       add = complete[source.index];
     }
-    console.log(add);
     dispatch(changeStatus(add));
   };
 

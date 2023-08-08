@@ -15,10 +15,9 @@ function TodoList({ droppableId, todos, type }) {
           {todos?.map((todo, index) => {
             return (
               <SingleTodo
+                todo={todo}
                 key={todo?._id}
-                id={todo?._id}
                 index={index}
-                task={todo?.todo}
                 droppableId={droppableId}
               />
             );
