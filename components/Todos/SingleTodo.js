@@ -24,6 +24,8 @@ function SingleTodo({ index, id, task, droppableId }) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          data-rbd-draggable-context-id="0"
+          data-rbd-drag-handle-context-id="0"
           className={styles.singleTodo}
         >
           <div>
@@ -33,7 +35,6 @@ function SingleTodo({ index, id, task, droppableId }) {
             <button onClick={editTodoHandler}>Edit</button>
             <button onClick={deleteTodoHandler}>Delete</button>
           </div>
-          {provided.placeholder}
         </div>
       )}
     </Draggable>

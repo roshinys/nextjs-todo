@@ -39,12 +39,12 @@ function TodosState() {
   };
 
   return (
-    <>
+    <div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Todos todos={activeTodos} droppableId="Active" type="Todos" />
         <Todos todos={completedTodos} droppableId="Completed" type="Todos" />
       </DragDropContext>
-    </>
+    </div>
   );
 }
 
