@@ -1,17 +1,21 @@
 import React from "react";
 import Todos from "./Todos";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { todoActions } from "@/store/todo-slice";
+import { useSelector } from "react-redux";
 
 function TodosState() {
   const activeTodos = useSelector((state) => state.todos.activeTodos);
   const completedTodos = useSelector((state) => state.todos.completedTodos);
+  console.log("hope");
+  console.log(activeTodos);
+  console.log(completedTodos);
   const dispatch = useDispatch();
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
+    console.log(result);
     if (!destination) {
       return;
     }
@@ -22,7 +26,7 @@ function TodosState() {
     let add,
       active = activeTodos,
       complete = completedTodos;
-    if (source.droppableId === "Todos") {
+    if (source.droppableId === "Active") {
       add = active[source.index];
       dispatch(todoActions.delActiveTodos({ _id: add?._id }));
       dispatch(todoActions.addCompletedTodo({ todo: add }));
@@ -37,8 +41,8 @@ function TodosState() {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Todos todos={activeTodos} label="Todos" />
-        <Todos todos={completedTodos} label="Completed" />
+        <Todos todos={activeTodos} droppableId="Active" type="Todos" />
+        <Todos todos={completedTodos} droppableId="Completed" type="Todos" />
       </DragDropContext>
     </>
   );

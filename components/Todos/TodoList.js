@@ -3,14 +3,14 @@ import SingleTodo from "./SingleTodo";
 import styles from "./TodoList.module.css";
 import { Droppable } from "react-beautiful-dnd";
 
-function TodoList({ label, todos }) {
+function TodoList({ droppableId, todos, type }) {
   return (
-    <Droppable droppableId={label}>
+    <Droppable droppableId={droppableId} type={type}>
       {(provided) => (
         <div
-          className={styles.wrapperTodos}
-          ref={provided.innerRef}
           {...provided.droppableProps}
+          ref={provided.innerRef}
+          className={styles.wrapperTodos}
         >
           {todos?.map((todo, index) => {
             return (
@@ -19,7 +19,7 @@ function TodoList({ label, todos }) {
                 id={todo?._id}
                 index={index}
                 task={todo?.todo}
-                label={label}
+                droppableId={droppableId}
               />
             );
           })}

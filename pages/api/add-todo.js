@@ -2,7 +2,6 @@ import { MongoClient } from "mongodb";
 
 async function handler(req, res) {
   try {
-    console.log(req.method === "POST");
     if (req.method === "POST") {
       const data = req.body;
       const client = await MongoClient.connect(process.env.MONGO_URI);
@@ -15,6 +14,7 @@ async function handler(req, res) {
         .json({ success: true, message: "Todos inserted!", todoItem: result });
     }
   } catch (err) {
+    client.close();
     console.log(err);
     return res
       .status(500)
