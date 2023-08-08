@@ -18,7 +18,7 @@ function TodoList({ label, todos }) {
                 key={todo?.id}
                 id={todo?.id}
                 index={index}
-                task={todo?.taskName}
+                task={todo?.todo}
                 label={label}
               />
             );

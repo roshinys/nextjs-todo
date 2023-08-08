@@ -13,17 +13,14 @@ const todoSlice = createSlice({
       state.activeTodos = action.payload.activeTodos;
       state.completedTodos = action.payload.completedTodos;
     },
-    addTodo: (state, action) => {
-      state.activeTodos.push({
-        id: Date.now(),
-        taskName: action.payload.taskName,
-      });
-    },
     addActiveTodo: (state, action) => {
-      state.activeTodos.push(action.payload.todo);
+      state.activeTodos.push({ ...action.payload.todo, status: "Active" });
     },
     addCompletedTodo: (state, action) => {
-      state.completedTodos.push(action.payload.todo);
+      state.completedTodos.push({
+        ...action.payload.todo,
+        status: "Completed",
+      });
     },
     deleteTodo: (state, action) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);

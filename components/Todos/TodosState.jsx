@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Todos from "./Todos";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
@@ -16,6 +16,7 @@ function TodosState() {
       return;
     }
     if (destination.droppableId === source.droppableId) {
+      //We can manipulate the index of arrays in same todos but will do that later
       return;
     }
     let add,
