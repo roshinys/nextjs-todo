@@ -23,7 +23,7 @@ const todoSlice = createSlice({
       });
     },
     deleteTodo: (state, action) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      state.todos = state.todos.filter((todo) => todo._id !== action.payload);
     },
     setActiveTodos: (state, action) => {
       state.activeTodos = action.payload.activeTodos;
@@ -33,12 +33,12 @@ const todoSlice = createSlice({
     },
     delActiveTodos: (state, action) => {
       state.activeTodos = state.activeTodos.filter((todos) => {
-        return todos.id !== action.payload.id;
+        return todos._id !== action.payload._id;
       });
     },
     delCompletedTodos: (state, action) => {
       state.completedTodos = state.completedTodos.filter((todos) => {
-        return todos.id !== action.payload.id;
+        return todos._id !== action.payload._id;
       });
     },
   },

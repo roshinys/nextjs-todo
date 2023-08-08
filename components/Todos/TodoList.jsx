@@ -15,8 +15,8 @@ function TodoList({ label, todos }) {
           {todos?.map((todo, index) => {
             return (
               <SingleTodo
-                key={todo?.id}
-                id={todo?.id}
+                key={todo?._id}
+                id={todo?._id}
                 index={index}
                 task={todo?.todo}
                 label={label}

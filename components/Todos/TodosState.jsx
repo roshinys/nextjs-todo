@@ -24,11 +24,11 @@ function TodosState() {
       complete = completedTodos;
     if (source.droppableId === "Todos") {
       add = active[source.index];
-      dispatch(todoActions.delActiveTodos({ id: add?.id }));
+      dispatch(todoActions.delActiveTodos({ _id: add?._id }));
       dispatch(todoActions.addCompletedTodo({ todo: add }));
     } else {
       add = complete[source.index];
-      dispatch(todoActions.delCompletedTodos({ id: add?.id }));
+      dispatch(todoActions.delCompletedTodos({ _id: add?._id }));
       dispatch(todoActions.addActiveTodo({ todo: add }));
     }
     console.log(source, destination);

@@ -20,7 +20,7 @@ function SingleTodo({ index, id, task, label }) {
   };
 
   return (
-    <Draggable draggableId={id?.toString()} index={index}>
+    <Draggable draggableId={id} index={index}>
       {(provided) => (
         <div
           className={styles.singleTodo}
