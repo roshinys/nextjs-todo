@@ -1,10 +1,10 @@
 import { MongoClient } from "mongodb";
 
 async function handler(req, res) {
+  const client = await MongoClient.connect(process.env.MONGO_URI);
   try {
     if (req.method === "POST") {
       const data = req.body;
-      const client = await MongoClient.connect(process.env.MONGO_URI);
       const db = client.db();
       const todosCollection = db.collection("todos");
       const result = await todosCollection.insertOne(data);
@@ -18,6 +18,8 @@ async function handler(req, res) {
     return res
       .status(500)
       .json({ success: false, message: "Failed to add todo" });
+  } finally {
+    client.close();
   }
 }
 

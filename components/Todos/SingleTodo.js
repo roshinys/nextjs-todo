@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import { changeStatus, delTodo } from "@/store/todo-action";
 
 function SingleTodo({ index, todo, droppableId }) {
-  const updatedStatus = todo?.status === "Active" ? "Completed" : "Active";
+  const isActiveTodo = droppableId === "Active";
+  const updatedStatus = isActiveTodo ? "Completed" : "Active";
   const dispatch = useDispatch();
-  const isActiveTodo = droppableId === "Active" ? true : false;
   const deleteTodoHandler = () => {
     dispatch(delTodo(todo._id, isActiveTodo));
   };

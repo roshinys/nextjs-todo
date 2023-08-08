@@ -2,10 +2,13 @@ import TodosState from "@/components/Todos/TodosState";
 import { todoActions } from "@/store/todo-slice";
 import { MongoClient } from "mongodb";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 export default function Home({ activeTodos, completedTodos }) {
   const dispatch = useDispatch();
-  dispatch(todoActions.setTodos({ activeTodos, completedTodos }));
+  useEffect(() => {
+    dispatch(todoActions.setTodos({ activeTodos, completedTodos }));
+  }, [activeTodos, completedTodos, dispatch]);
   return <TodosState />;
 }
 

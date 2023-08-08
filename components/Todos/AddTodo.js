@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import styles from "./AddTodo.module.css";
 import { useDispatch } from "react-redux";
 import { addTodo } from "@/store/todo-action";
+import { useSelector } from "react-redux";
 
 const AddTodo = () => {
+  const { activeTodos, completedTodos } = useSelector((state) => state.todos);
+  const totalTodosLen = activeTodos.length + completedTodos.length;
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [taskName, setTaskName] = useState("");
@@ -23,6 +26,10 @@ const AddTodo = () => {
 
   const handleAddTodo = (event) => {
     event.preventDefault();
+    if (totalTodosLen === 5) {
+      alert("You can only add 10 todos at max try deleting some");
+      return;
+    }
     dispatch(
       addTodo({
         todo: taskName,

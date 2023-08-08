@@ -4,7 +4,7 @@ import TodoList from "./TodoList";
 import AddTodo from "./AddTodo";
 
 function Todos({ todos, droppableId, type }) {
-  const showAddTodo = droppableId === "Active" ? true : false;
+  const showAddTodo = droppableId === "Active";
 
   return (
     <div className={styles.todos}>

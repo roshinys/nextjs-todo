@@ -2,17 +2,14 @@ import React from "react";
 import Todos from "./Todos";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
-import { todoActions } from "@/store/todo-slice";
 import { useSelector } from "react-redux";
 import { changeStatus } from "@/store/todo-action";
 
 function TodosState() {
-  const activeTodos = useSelector((state) => state.todos.activeTodos);
-  const completedTodos = useSelector((state) => state.todos.completedTodos);
+  const { activeTodos, completedTodos } = useSelector((state) => state.todos);
   const dispatch = useDispatch();
 
-  const onDragEnd = (result) => {
-    const { source, destination } = result;
+  const onDragEnd = ({ source, destination }) => {
     if (!destination) {
       return;
     }
@@ -20,14 +17,10 @@ function TodosState() {
       //We can manipulate the index of arrays in same todos but will do that later
       return;
     }
-    let add,
-      active = activeTodos,
-      complete = completedTodos;
-    if (source.droppableId === "Active") {
-      add = active[source.index];
-    } else {
-      add = complete[source.index];
-    }
+    const add =
+      source.droppableId === "Active"
+        ? activeTodos[source.index]
+        : completedTodos[source.index];
     dispatch(changeStatus(add));
   };
 
