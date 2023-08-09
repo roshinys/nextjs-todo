@@ -21,7 +21,7 @@ export default function Home({ activeTodos, completedTodos }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   let client;
   try {
     client = await MongoClient.connect(process.env.MONGO_URI, {
@@ -47,6 +47,7 @@ export async function getServerSideProps() {
         activeTodos,
         completedTodos,
       },
+      revalidate: 1,
     };
   } catch (error) {
     console.error("Error fetching todos:", error);
@@ -55,6 +56,7 @@ export async function getServerSideProps() {
         activeTodos: [],
         completedTodos: [],
       },
+      revalidate: 1,
     };
   } finally {
     if (client) {
