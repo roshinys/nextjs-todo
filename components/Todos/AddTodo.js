@@ -5,6 +5,7 @@ import { addTodo } from "@/store/todo-action";
 import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
 const AddTodo = () => {
   const { activeTodos, completedTodos } = useSelector((state) => state.todos);
@@ -29,7 +30,7 @@ const AddTodo = () => {
   const handleAddTodo = (event) => {
     event.preventDefault();
     if (totalTodosLen === 5) {
-      alert("You can only add 10 todos at max try deleting some");
+      alert("You can only add 5 todos at max try deleting some");
       return;
     }
     dispatch(
@@ -42,7 +43,7 @@ const AddTodo = () => {
   };
 
   return (
-    <div>
+    <div className={styles.addTodo}>
       <IconButton onClick={handleModalOpen} className={styles.addButton}>
         <AddIcon />
         <span>Add Todo</span>
@@ -61,10 +62,16 @@ const AddTodo = () => {
                 />
               </label>
               <div className="modal-actions">
-                <button type="submit">Add</button>
-                <button type="button" onClick={handleModalClose}>
-                  Cancel
-                </button>
+                <IconButton type="submit" className={styles.addButton}>
+                  <AddIcon />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  onClick={handleModalClose}
+                  className={styles.addButton}
+                >
+                  <CloseIcon />
+                </IconButton>
               </div>
             </form>
           </div>
