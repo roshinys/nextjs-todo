@@ -1,7 +1,7 @@
 import { MongoClient, ObjectId } from "mongodb";
 
 async function handler(req, res) {
-  const client = await MongoClient.connect(process.env.MONGO_URI);
+  let client = await MongoClient.connect(process.env.MONGO_URI);
   const db = client.db();
   try {
     if (req.method === "PUT") {
@@ -24,7 +24,9 @@ async function handler(req, res) {
       .status(500)
       .json({ success: false, message: "Failed to Change todo Status" });
   } finally {
-    client.close();
+    if (client) {
+      client.close();
+    }
   }
 }
 

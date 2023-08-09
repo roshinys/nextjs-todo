@@ -3,7 +3,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 async function handler(req, res) {
   let success = false;
   let message = "Something went wrong";
-  const client = await MongoClient.connect(process.env.MONGO_URI, {
+  let client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -27,7 +27,9 @@ async function handler(req, res) {
     success = false;
     message = "Something went wrong";
   } finally {
-    client.close();
+    if (client) {
+      client.close();
+    }
     return res.json({ success, message });
   }
 }

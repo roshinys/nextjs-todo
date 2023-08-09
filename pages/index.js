@@ -21,29 +21,44 @@ export default function Home({ activeTodos, completedTodos }) {
   );
 }
 
-export async function getStaticProps() {
-  const client = await MongoClient.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  const db = client.db();
-  const todosCollection = db.collection("todos");
-  const result = await todosCollection.find().toArray();
-  const activeTodos = [];
-  const completedTodos = [];
-  client.close();
-  result.forEach((todo) => {
-    if (todo.status === "Active") {
-      activeTodos.push({ ...todo, _id: todo._id.toString() }); // Convert _id to string
-    } else {
-      completedTodos.push({ ...todo, _id: todo._id.toString() }); // Convert _id to string
-    }
-  });
+export async function getServerSideProps() {
+  let client;
+  try {
+    client = await MongoClient.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    const db = client.db();
+    const todosCollection = db.collection("todos");
+    const result = await todosCollection.find().toArray();
+    const activeTodos = [];
+    const completedTodos = [];
 
-  return {
-    props: {
-      activeTodos,
-      completedTodos,
-    },
-  };
+    result.forEach((todo) => {
+      if (todo.status === "Active") {
+        activeTodos.push({ ...todo, _id: todo._id.toString() }); // Convert _id to string
+      } else {
+        completedTodos.push({ ...todo, _id: todo._id.toString() }); // Convert _id to string
+      }
+    });
+
+    return {
+      props: {
+        activeTodos,
+        completedTodos,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching todos:", error);
+    return {
+      props: {
+        activeTodos: [],
+        completedTodos: [],
+      },
+    };
+  } finally {
+    if (client) {
+      client.close();
+    }
+  }
 }
