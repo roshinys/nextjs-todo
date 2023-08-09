@@ -1,17 +1,12 @@
 import React from "react";
 import SingleTodo from "./SingleTodo";
-import styles from "./TodoList.module.css";
 import { Droppable } from "react-beautiful-dnd";
 
 function TodoList({ droppableId, todos, type }) {
   return (
     <Droppable droppableId={droppableId} type={type}>
       {(provided) => (
-        <div
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          className={styles.wrapperTodos}
-        >
+        <div {...provided.droppableProps} ref={provided.innerRef}>
           {todos?.map((todo, index) => {
             return (
               <SingleTodo

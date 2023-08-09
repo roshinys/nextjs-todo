@@ -8,6 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { modalActions } from "@/store/modal-slice";
 
 function SingleTodo({ index, todo, droppableId }) {
   const isActiveTodo = droppableId === "Active";
@@ -17,7 +18,9 @@ function SingleTodo({ index, todo, droppableId }) {
   };
 
   const editTodoHandler = () => {
-    console.log("will do it later");
+    dispatch(delTodo(todo._id, isActiveTodo));
+    dispatch(modalActions.setTaskName({ taskName: todo?.todo }));
+    dispatch(modalActions.handleOpenModal());
   };
 
   const statusChangeHandler = () => {

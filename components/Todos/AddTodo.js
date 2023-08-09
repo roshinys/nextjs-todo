@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./AddTodo.module.css";
 import { useDispatch } from "react-redux";
 import { addTodo } from "@/store/todo-action";
@@ -6,25 +6,29 @@ import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import { modalActions } from "@/store/modal-slice";
 
 const AddTodo = () => {
   const { activeTodos, completedTodos } = useSelector((state) => state.todos);
   const totalTodosLen = activeTodos.length + completedTodos.length;
   const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [taskName, setTaskName] = useState("");
+  const { isModalOpen, taskName } = useSelector((state) => state.modal);
+  const [task, setTask] = useState("");
+  useEffect(() => {
+    setTask(taskName);
+  }, [taskName]);
 
   const handleModalOpen = () => {
-    setIsModalOpen(true);
+    dispatch(modalActions.handleOpenModal());
   };
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
-    setTaskName("");
+    dispatch(modalActions.handleCloseModal());
+    setTask("");
   };
 
   const handleTaskNameChange = (event) => {
-    setTaskName(event.target.value);
+    setTask(event.target.value);
   };
 
   const handleAddTodo = (event) => {
@@ -35,7 +39,7 @@ const AddTodo = () => {
     }
     dispatch(
       addTodo({
-        todo: taskName,
+        todo: task,
         status: "Active",
       })
     );
@@ -57,7 +61,7 @@ const AddTodo = () => {
                 Task Name:
                 <input
                   type="text"
-                  value={taskName}
+                  value={task}
                   onChange={handleTaskNameChange}
                 />
               </label>
