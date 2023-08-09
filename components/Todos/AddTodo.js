@@ -3,6 +3,8 @@ import styles from "./AddTodo.module.css";
 import { useDispatch } from "react-redux";
 import { addTodo } from "@/store/todo-action";
 import { useSelector } from "react-redux";
+import { IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const AddTodo = () => {
   const { activeTodos, completedTodos } = useSelector((state) => state.todos);
@@ -41,7 +43,10 @@ const AddTodo = () => {
 
   return (
     <div>
-      <button onClick={handleModalOpen}>Add Todo</button>
+      <IconButton onClick={handleModalOpen} className={styles.addButton}>
+        <AddIcon />
+        <span>Add Todo</span>
+      </IconButton>
       {isModalOpen && (
         <div className={styles["modal-overlay"]}>
           <div className={styles["modal-content"]}>

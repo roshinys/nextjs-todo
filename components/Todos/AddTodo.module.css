@@ -62,6 +62,19 @@
   background-color: #f0f0f0;
 }
 
+.addButton {
+  color: black !important;
+}
+
+.addButton > span {
+  font-size: 14px;
+}
+
+.addButton:hover {
+  background-color: none !important;
+  border: none !important;
+}
+
 @media (max-width: 768px) {
   .modal-content {
     max-width: 70%;

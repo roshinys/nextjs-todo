@@ -4,3 +4,6 @@ body {
   margin: 0;
   font-family: "Borel", cursive;
 }
+.MuiButtonBase-root {
+  color: white !important;
+}
