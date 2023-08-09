@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SingleTodo.module.css";
 import { Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { modalActions } from "@/store/modal-slice";
 
 function SingleTodo({ index, todo, droppableId }) {
+  const [clickAllowed, setClickAllowed] = useState(true);
   const isActiveTodo = droppableId === "Active";
   const dispatch = useDispatch();
   const deleteTodoHandler = () => {
@@ -24,7 +25,13 @@ function SingleTodo({ index, todo, droppableId }) {
   };
 
   const statusChangeHandler = () => {
-    dispatch(changeStatus(todo));
+    if (clickAllowed) {
+      dispatch(changeStatus(todo));
+      setClickAllowed(false);
+      setTimeout(() => {
+        setClickAllowed(true);
+      }, 1000);
+    }
   };
 
   return (
@@ -34,20 +41,27 @@ function SingleTodo({ index, todo, droppableId }) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          data-rbd-draggable-context-id="0"
-          data-rbd-drag-handle-context-id="0"
+          // data-rbd-draggable-context-id="0"
+          // data-rbd-drag-handle-context-id="0"
           className={styles.singleTodo}
         >
           <h1>{todo?.todo}</h1>
           <div>
-            <IconButton onClick={statusChangeHandler}>
+            <IconButton
+              className={styles.iconButton}
+              onClick={statusChangeHandler}
+              onTouchStart={statusChangeHandler}
+            >
               {!isActiveTodo && <KeyboardArrowUpIcon />}
               {isActiveTodo && <KeyboardArrowDownIcon />}
             </IconButton>
-            <IconButton onClick={editTodoHandler}>
+            <IconButton onClick={editTodoHandler} onTouchEnd={editTodoHandler}>
               <EditIcon />
             </IconButton>
-            <IconButton onClick={deleteTodoHandler}>
+            <IconButton
+              onClick={deleteTodoHandler}
+              onTouchEnd={deleteTodoHandler}
+            >
               <DeleteIcon />
             </IconButton>
           </div>
