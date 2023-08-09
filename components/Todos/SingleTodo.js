@@ -3,10 +3,14 @@ import styles from "./SingleTodo.module.css";
 import { Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import { changeStatus, delTodo } from "@/store/todo-action";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { IconButton } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 function SingleTodo({ index, todo, droppableId }) {
   const isActiveTodo = droppableId === "Active";
-  const updatedStatus = isActiveTodo ? "Completed" : "Active";
   const dispatch = useDispatch();
   const deleteTodoHandler = () => {
     dispatch(delTodo(todo._id, isActiveTodo));
@@ -33,9 +37,16 @@ function SingleTodo({ index, todo, droppableId }) {
         >
           <h1>{todo?.todo}</h1>
           <div>
-            <button onClick={statusChangeHandler}>{updatedStatus}</button>
-            <button onClick={editTodoHandler}>Edit</button>
-            <button onClick={deleteTodoHandler}>Delete</button>
+            <IconButton onClick={statusChangeHandler}>
+              {!isActiveTodo && <KeyboardArrowUpIcon />}
+              {isActiveTodo && <KeyboardArrowDownIcon />}
+            </IconButton>
+            <IconButton onClick={editTodoHandler}>
+              <EditIcon />
+            </IconButton>
+            <IconButton onClick={deleteTodoHandler}>
+              <DeleteIcon />
+            </IconButton>
           </div>
         </div>
       )}
