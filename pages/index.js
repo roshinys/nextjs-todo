@@ -3,13 +3,22 @@ import { todoActions } from "@/store/todo-slice";
 import { MongoClient } from "mongodb";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import Head from "next/head";
 
 export default function Home({ activeTodos, completedTodos }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(todoActions.setTodos({ activeTodos, completedTodos }));
   }, [activeTodos, completedTodos, dispatch]);
-  return <TodosState />;
+  return (
+    <>
+      <Head>
+        <title>Todo-Daivik</title>
+        <meta name="todos" content="Todo App with better functionality" />
+      </Head>
+      <TodosState />
+    </>
+  );
 }
 
 export async function getStaticProps() {
