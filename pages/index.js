@@ -15,13 +15,17 @@ export default function Home({ activeTodos, completedTodos }) {
       <Head>
         <title>Todo-Daivik</title>
         <meta name="todos" content="Todo App with better functionality" />
+        <link
+          rel="icon"
+          href="https://preview.redd.it/ema88ke10w321.jpg?auto=webp&s=08005d9c57455cdcff385debda53d756953f1fbf"
+        />
       </Head>
       <TodosState />
     </>
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   let client;
   try {
     client = await MongoClient.connect(process.env.MONGO_URI, {
@@ -47,7 +51,6 @@ export async function getStaticProps() {
         activeTodos,
         completedTodos,
       },
-      revalidate: 1,
     };
   } catch (error) {
     console.error("Error fetching todos:", error);
@@ -56,7 +59,6 @@ export async function getStaticProps() {
         activeTodos: [],
         completedTodos: [],
       },
-      revalidate: 1,
     };
   } finally {
     if (client) {
